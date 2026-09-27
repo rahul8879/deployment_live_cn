@@ -53,3 +53,23 @@ jobs:
                 -e TEST_MODE=true \
                 production-rag:ci
 
+            - name: Health check
+              run: |
+                for i in {1..20}; do
+                    if curl --fail http://localhost:8080/health; then
+                    echo "Application healthy"
+                    exit 0
+                    fi
+
+                    sleep 1
+                done
+
+                docker logs production-rag-ci
+                exit 1
+
+
+            - name: Cleanup
+              if: always()
+              run: |
+                docker rm -f production-rag-ci || true
+
