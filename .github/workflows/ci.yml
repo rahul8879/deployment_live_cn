@@ -42,3 +42,14 @@ jobs:
                 PYTHONPATH: .
               run: |
                 pytest -q
+            - name: Build Docker image
+              run: |
+                docker build -t production-rag:ci .
+            - name: Start Docker container
+              run: |
+                docker run -d \
+                --name production-rag-ci \
+                -p 8080:8080 \
+                -e TEST_MODE=true \
+                production-rag:ci
+
