@@ -1,9 +1,9 @@
 name: CI Learning
 
 on:
-  push:
+  pull_request:
     branches:
-      - ci-learning
+      - main
 jobs:
     stage-1:
         runs-on: ubuntu-latest
@@ -42,6 +42,7 @@ jobs:
                 PYTHONPATH: .
               run: |
                 pytest -q
+
             - name: Build Docker image
               run: |
                 docker build -t production-rag:ci .
@@ -72,14 +73,4 @@ jobs:
               if: always()
               run: |
                 docker rm -f production-rag-ci || true
-    stage-2:
-        runs-on: ubuntu-latest
-        steps:
-            - name : Understand the runner
-              run: |
-                echo "Hello from GitHub Actions"
-                echo "Machine:"
-                uname -a
-                echo "Current directory:"
-                pwd
-        
+    
