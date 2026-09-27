@@ -97,6 +97,9 @@ def health():
         "test_mode": TEST_MODE,
     }
 
+@app.get("/ready")
+def ready():
+    return {"status": "ready"}
 
 
 @app.post("/chat")
