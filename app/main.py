@@ -104,6 +104,7 @@ def ready():
 
 @app.post("/chat")
 def chat(request: ChatRequest):
+    
     if RAG_CHAIN is None:
         raise HTTPException(status_code=503, detail="RAG pipeline not ready")
     result = RAG_CHAIN.invoke(request.question)
