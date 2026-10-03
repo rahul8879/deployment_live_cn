@@ -108,3 +108,8 @@ def chat(request: ChatRequest):
         raise HTTPException(status_code=503, detail="RAG pipeline not ready")
     result = RAG_CHAIN.invoke(request.question)
     return {"question": request.question, "answer": result.content}
+
+
+@app.get("/happy")
+def happy():
+    return {"status": "happy"}
